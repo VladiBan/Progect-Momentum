@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://ddr2nyfbseedb"]
+
+[ext_resource type="Script" uid="uid://gdbh8qe7bews" path="res://Player/Player.gd" id="1_kpmja"]
+[ext_resource type="PackedScene" uid="uid://bl6xutulie7hd" path="res://Player/sword.glb" id="2_ku6g1"]
+[ext_resource type="Texture2D" uid="uid://c5yvgw1puwjeb" path="res://Player/New Piskel (1).png" id="6_yr07i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b4nnr"]
+height = 2.0864258
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b4nnr"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yr07i"]
+emission_shape = 6
+emission_ring_axis = Vector3(0.2, 0.025, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 0.5
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 0)
+spread = 0.0
+initial_velocity_max = 27.47
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3eu6"]
+size = Vector3(0.01, 0.01, 10)
+
+
+
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_kpmja")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.552691, 0)
+
+[node name="sword2" parent="CameraPivot/Camera3D" instance=ExtResource("2_ku6g1")]
+transform = Transform3D(-3.496911e-09, -0.08, 3.496911e-09, 0, -3.496911e-09, -0.08, 0.08, -3.496911e-09, 1.5285484e-16, 0.9063926, 0.03262472, -0.7904963)
+
+[node name="Weapon Manager" type="Node3D" parent="CameraPivot/Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0009258, 0)
+shape = SubResource("CapsuleShape3D_b4nnr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0001885891, 1.0070281, -0.007153392)
+mesh = SubResource("CapsuleMesh_b4nnr")
+
+[node name="Reticle" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_yr07i")
+expand_mode = 1
+
+[node name="particles" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.99977887, 0, 0.021029668, 0, 1, 0, -0.021029668, 0, 0.99977887, 0, 0.5247315, 0)
+amount = 30
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_yr07i")
+draw_pass_1 = SubResource("BoxMesh_f3eu6")
+

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://biflalwp3hk3l"]
+
+[ext_resource type="PackedScene" uid="uid://ddr2nyfbseedb" path="res://Player/character_body_3d.tscn" id="2_anrcy"]
+[ext_resource type="Material" uid="uid://crmkyxxaub67n" path="res://Materials/Debug material.tres" id="2_lmufu"]
+
+[sub_resource type="Environment" id="Environment_e2o6t"]
+background_mode = 1
+background_color = Color(0.35906908, 0.35906908, 0.35906908, 1)
+background_energy_multiplier = 0.83
+ambient_light_source = 2
+ambient_light_color = Color(0.71194154, 0.6679206, 0.5622265, 1)
+tonemap_mode = 2
+tonemap_exposure = 1.24
+tonemap_white = 1.83
+fog_enabled = true
+fog_light_color = Color(0.40114737, 0.4342246, 0.48568428, 1)
+fog_sky_affect = 0.3
+fog_height = 0.5
+fog_height_density = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30ls0"]
+
+[node name="Game" type="Node3D" unique_id=1080567778]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=622513893]
+environment = SubResource("Environment_e2o6t")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1301755068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7226195, -12.9736, -1.8359118)
+material_override = ExtResource("2_lmufu")
+gi_mode = 2
+use_collision = true
+size = Vector3(100, 20, 200)
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=1519675291]
+transform = Transform3D(0.7071068, -0.6123726, 0.35355315, 0, 0.49999964, 0.8660256, -0.7071068, -0.6123726, 0.35355315, 6, 15, 4)
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
+[node name="CharacterBody3D" parent="." unique_id=440698575 instance=ExtResource("2_anrcy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044558883, -1.7223356, -0.018588781)
+
+[node name="Wall test" type="CSGBox3D" parent="." unique_id=831355948]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, 8.5573225, 0.16280079, -11.757226)
+use_collision = true
+size = Vector3(1, 4.030182, 4.536621)
+
+[node name="Wallkick" type="CSGBox3D" parent="Wall test" unique_id=958325340]
+transform = Transform3D(1, 0, 0, 0, 1.00001, 4.4703484e-08, 0, -4.4703484e-08, 1.00001, -4.449813, 2.5546389, -2.1703606)
+size = Vector3(1, 7.7751236, 11.303955)
+
+[node name="Slide" type="CSGBox3D" parent="." unique_id=1284271908]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, -3.2513628, 5.72942, -2.6939058)
+use_collision = true
+size = Vector3(1, 4.030182, 4.536621)
+
+[node name="Slide" type="CSGBox3D" parent="Slide" unique_id=253030933]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, -4.2495155, 4.723099, -3.6121664)
+use_collision = true
+size = Vector3(1, 4.030182, 4.536621)
+
+[node name="Wall test2" type="CSGBox3D" parent="." unique_id=2096110429]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, 8.5573225, 0.16280079, -11.757226)
+use_collision = true
+size = Vector3(1, 4.030182, 4.536621)
+
+[node name="Wallkick" type="CSGBox3D" parent="Wall test2" unique_id=94588401]
+transform = Transform3D(1, 0, 0, 0, 1.00001, 4.4703484e-08, 0, -4.4703484e-08, 1.00001, -4.449813, 2.5546389, -2.1703606)
+size = Vector3(1, 7.7751236, 11.303955)
+
+[node name="Slide2" type="CSGBox3D" parent="." unique_id=159219853]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, 6.2888727, 3.2814364, -24.029238)
+material_override = SubResource("StandardMaterial3D_30ls0")
+use_collision = true
+size = Vector3(3.6726074, 0.477005, 7.1935425)
+
+[node name="Walls" type="Node3D" parent="." unique_id=1747617258]
+transform = Transform3D(1, 0, 0, 0, 0.9995552, 0.029823255, 0, -0.029823255, 0.9995552, -29.567945, 7.492288, -14.391396)
+
+[node name="WALL FRONt" type="CSGBox3D" parent="Walls" unique_id=1451833980]
+transform = Transform3D(1, 0, 0, 0, 1.000047, -2.7008355e-07, 0, 2.7008355e-07, 1.000047, 31.116535, 3.431942, -88.1655)
+use_collision = true
+size = Vector3(99.937325, 23.879005, 1.6209717)
+
+[node name="WALL FRONt" type="CSGBox3D" parent="Walls/WALL FRONt" unique_id=395878470]
+transform = Transform3D(1, 0, 0, 0, 1.000047, -2.7008355e-07, 0, 2.7008355e-07, 1.000047, -4.478216, -12.556253, 200.01523)
+use_collision = true
+size = Vector3(111.31746, 23.879005, 1.6209717)

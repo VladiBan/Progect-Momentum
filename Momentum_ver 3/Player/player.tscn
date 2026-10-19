@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://dnl3xgr3647oq"]
+
+[ext_resource type="Script" uid="uid://gdbh8qe7bews" path="res://Player/Player.gd" id="1_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://bl6xutulie7hd" path="res://Player/sword.glb" id="1_l8h54"]
+[ext_resource type="Script" uid="uid://cdmnxbj1if6qu" path="res://Player/state_machine.gd" id="4_gwnis"]
+[ext_resource type="Script" uid="uid://bnsntj346oy01" path="res://Player/idlePlayerState.gd" id="5_k53q1"]
+[ext_resource type="Script" uid="uid://rjhauslotyjm" path="res://Player/PlayerWalkingState.gd" id="6_fhl08"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b4nnr"]
+height = 2.0864258
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b4nnr"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k53q1"]
+load_path = "res://.godot/imported/New Piskel (1).png-ceb1dd9bb8639fea4b6fa7d071abc6d4.ctex"
+
+[sub_resource type="Theme" id="Theme_k53q1"]
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+PanelContainer/styles/panel = null
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_4ntmi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0009258, 0)
+shape = SubResource("CapsuleShape3D_b4nnr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.552691, 0)
+
+[node name="sword2" parent="Camera3D" instance=ExtResource("1_l8h54")]
+transform = Transform3D(-3.496911e-09, -0.08, 3.496911e-09, 0, -3.496911e-09, -0.08, 0.08, -3.496911e-09, 1.5285484e-16, 0.9063926, 0.03262472, -0.7904963)
+
+[node name="Weapon Manager" type="Node3D" parent="Camera3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_b4nnr")
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]
+script = ExtResource("4_gwnis")
+CurrentState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine"]
+script = ExtResource("5_k53q1")
+
+[node name="Walking" type="Node" parent="State Machine"]
+script = ExtResource("6_fhl08")
+
+[node name="User Int" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Crosshair" type="TextureRect" parent="User Int"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 190.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_k53q1")
+expand_mode = 1
+
+[node name="DebugPanel" type="Panel" parent="User Int"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_k53q1")
+
+[node name="MarginContainer" type="MarginContainer" parent="User Int/DebugPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="User Int/DebugPanel/MarginContainer"]
+layout_mode = 2

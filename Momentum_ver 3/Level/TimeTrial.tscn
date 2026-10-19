@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Level/TimeTrial.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Player/character_body_3d.tscn" id="2_player"]
+
+[node name="TimeTrial" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector3(0, 0.08, 9)

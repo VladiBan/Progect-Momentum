@@ -1,0 +1,103 @@
+Here is all the code that Momentum GoDOt game has
+
+Debug.gd:
+
+extends Control
+
+@onready var property_container := get_node_or_null(
+    "UserInt/DebugPanel/MarginContainer/VBoxContainer"
+)
+
+func _ready():
+	visible = true
+	size = Vector2(400, 120)
+	position = Vector2(20,20)
+func add_property(title: String, value, order: int = -1):
+	if property_container == null:
+		return
+	visible = true
+	var label := property_container.find_child(title, false, false)
+	if label == null:
+		label = Label.new()
+		label.name = title
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+
+		property_container.add_child(label)
+
+		if order >= 0:
+			property_container.move_child(label, order)
+
+	label.text = title + ": " + str(value)
+
+Global.gd:
+
+extends Node
+var Debug 
+var player 
+
+
+Player.gd:
+
+
+extends CharacterBody3D
+var jump_velocity = 10
+var gravity = 20
+var acceleration = 20
+var friction = 30
+const speed = 10
+const air_acceleration = 20
+const air_friction = 2
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Global.player = self
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		rotation_degrees.y -= event.relative.x  * 0.5
+		$Camera3D.rotation_degrees.x -= event.relative.y * 0.5
+		$Camera3D.rotation_degrees.x = clamp(
+			$Camera3D.rotation_degrees.x, -88, 88
+		)
+	elif event.is_action_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+func _physics_process(_delta):
+# Gravity
+	if not is_on_floor():
+		velocity.y -= gravity * _delta
+	
+	# jump
+	if Input.is_action_just_pressed("Jump") and is_on_floor():
+		velocity.y = jump_velocity
+	
+	
+	if Input.is_action_just_released("Jump") and velocity.y > 0:
+		velocity.y *= 0.5
+
+	# diractions
+	var input_dir = Input.get_vector("move_left", "move_right", "move_back", "move_forward")
+	var direction = (transform.basis * Vector3(input_dir.x, 0.0, -input_dir.y)).normalized()
+
+	# ground or air
+	var current_acceleration = acceleration
+	var current_friction = friction
+
+	if not is_on_floor():
+		current_acceleration = air_acceleration
+		current_friction = air_friction
+
+	# 5. calc horiz vel
+	var horizontal_velocity = Vector2(velocity.x, velocity.z)
+	var target_velocity = Vector2(direction.x, direction.z) * speed
+	
+	# see if we are moving or no
+	var strength = current_acceleration if direction.length() > 0 else current_friction
+	
+	var new_velocity = horizontal_velocity.move_toward(target_velocity, strength * _delta)
+	
+	velocity.x = new_velocity.x
+	velocity.z = new_velocity.y
+
+	move_and_slide()
+
